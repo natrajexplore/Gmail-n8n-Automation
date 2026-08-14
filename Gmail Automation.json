@@ -1,0 +1,154 @@
+{
+  "name": "Gmail Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -288,
+        -80
+      ],
+      "id": "fc841d8c-7ae7-409f-b14d-5654f88fa79f",
+      "name": "When chat message received",
+      "webhookId": "a0a58a61-6f02-49a7-9a4f-6b7468c4c4b7"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -64,
+        -80
+      ],
+      "id": "b84d7300-7b2d-4b55-a118-5226ede48900",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -208,
+        128
+      ],
+      "id": "0e0fed94-5b15-4077-8187-4b85b0be485d",
+      "name": "Brain",
+      "credentials": {
+        "openAiApi": {
+          "id": "K4qUOb3wdHX5xRwJ",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -64,
+        128
+      ],
+      "id": "13c21046-ac9c-4678-b779-a0dcd12938d2",
+      "name": "Memory"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        128
+      ],
+      "id": "a14ded36-0ccb-4d6b-92b7-12aa9cffed07",
+      "name": "Action",
+      "webhookId": "7e071795-2b9a-43ec-aa59-73c362a0a27c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ArSEGnqm7bveV8e1",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brain": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Action": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e0eb34d3-18fa-46a7-8c4f-237dbad67f9f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7f3e87056735cd6d8533f65b2daa6ccadfcef4721c5e2b5f2772fe3650f87dbf"
+  },
+  "nodeGroups": [],
+  "id": "DZSilSE5u2qV6c63",
+  "tags": []
+}
